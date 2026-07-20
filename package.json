@@ -1,0 +1,70 @@
+{
+    "$schema": "https://json.schemastore.org/package.json",
+    "name": "context-compress-algorithms",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "Standalone algorithms for conversation context compression — quality gates, prompt providers, trigger policies. MIT-licensed.",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "./quality-gate": {
+            "types": "./dist/quality-gate/index.d.ts",
+            "import": "./dist/quality-gate/index.js"
+        },
+        "./prompts": {
+            "types": "./dist/prompts/index.d.ts",
+            "import": "./dist/prompts/index.js"
+        },
+        "./trigger": {
+            "types": "./dist/trigger/index.d.ts",
+            "import": "./dist/trigger/index.js"
+        }
+    },
+    "scripts": {
+        "clean": "rm -rf dist",
+        "build": "npm run clean && tsup && tsc --emitDeclarationOnly",
+        "typecheck": "tsc --noEmit",
+        "test": "node --import tsx --test tests/*.test.ts",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "keywords": [
+        "context",
+        "compression",
+        "context-compression",
+        "context-pruning",
+        "llm",
+        "quality-gate",
+        "rouge",
+        "summarization",
+        "prompts",
+        "mit"
+    ],
+    "author": "ranxianglei",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ranxianglei/context-compress-algorithms.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ranxianglei/context-compress-algorithms/issues"
+    },
+    "homepage": "https://github.com/ranxianglei/context-compress-algorithms#readme",
+    "devDependencies": {
+        "@types/node": "^25.5.0",
+        "prettier": "^3.8.1",
+        "tsup": "^8.5.1",
+        "tsx": "^4.21.0",
+        "typescript": "^6.0.2"
+    },
+    "files": [
+        "dist/",
+        "README.md",
+        "LICENSE",
+        "AGENTS.md"
+    ]
+}
