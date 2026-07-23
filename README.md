@@ -27,6 +27,9 @@ blocks; the principles themselves make no reference to host-specific tools.
 - `HOW_TO_COMPRESS_RULES` — verbatim / drop / priority rules for summary
   content. Tool-agnostic.
 - `COMPRESS_PHILOSOPHY` — short companion block on need-based compression.
+- `MEMORY_GUIDELINES` — when to record a durable memory vs. a compression
+  summary, what belongs in each, and how memory interacts with compression
+  (record before compress; memories are protected from compression).
 
 Tool-specific prompt templates (compress tool description, system prompt,
 nudges) are deliberately NOT in this package — they belong to whichever host
@@ -81,7 +84,11 @@ console.log(result.passed, result.layer, result.reason, result.metrics)
 ### Prompts (compression principles)
 
 ```typescript
-import { HOW_TO_COMPRESS_RULES, COMPRESS_PHILOSOPHY } from "context-compress-algorithms/prompts"
+import {
+    HOW_TO_COMPRESS_RULES,
+    COMPRESS_PHILOSOPHY,
+    MEMORY_GUIDELINES,
+} from "context-compress-algorithms/prompts"
 
 // Interpolate into your own system / nudge templates
 const systemPrompt = `
@@ -90,6 +97,8 @@ You operate in a context-constrained environment.
 ${HOW_TO_COMPRESS_RULES}
 
 ${COMPRESS_PHILOSOPHY}
+
+${MEMORY_GUIDELINES}
 `
 ```
 
@@ -138,6 +147,23 @@ registerTriggerPolicy(myHostRegister)
 The host's registry types must be structurally compatible with the types
 declared in this package. TypeScript's structural typing makes this work
 without a hard runtime dependency in either direction.
+
+## Changelog
+
+### v1.1.0
+
+**Added**: `MEMORY_GUIDELINES` prompt constant — when to record a durable
+memory vs. a compression summary, what belongs in each, and how memory
+interacts with compression (record before compress; memories are protected
+from compression). Host systems with a persistent-memory tool can interpolate
+this into their system prompt and compress-time nudges.
+Files: `src/prompts/memory-guidelines.ts`, `src/prompts/index.ts`.
+
+### v1.0.0
+
+Initial release: quality gate (`rouge-recall-v1`), compression prompt
+principles (`HOW_TO_COMPRESS_RULES`, `COMPRESS_PHILOSOPHY`), and trigger
+policy (`computeShouldNudge`, `resolveAdaptiveNudgeGrowth`).
 
 ## License
 
