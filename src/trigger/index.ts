@@ -10,3 +10,5 @@ export {
     defaultTriggerPolicy,
     registerTriggerPolicy,
 } from "./default"
+export type { CompressionTier, TierTokenUsage, TierBudgetConfig, TierTriggerResult } from "./tier"
+export { computeTierTrigger, computeTierBudgets } from "./tier"

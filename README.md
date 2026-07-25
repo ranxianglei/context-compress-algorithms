@@ -27,6 +27,10 @@ blocks; the principles themselves make no reference to host-specific tools.
 - `HOW_TO_COMPRESS_RULES` — verbatim / drop / priority rules for summary
   content. Tool-agnostic.
 - `COMPRESS_PHILOSOPHY` — short companion block on need-based compression.
+- `TIER2_DISTILL_RULES` — distillation rules for compressing T1 summaries
+  into T2 blocks (keep decisions/outcomes/function refs, drop process details).
+- `TIER3_CONDENSE_RULES` — ultra-condensation rules for T2→T3 (bare facts,
+  1-3 lines per block).
 
 Tool-specific prompt templates (compress tool description, system prompt,
 nudges) are deliberately NOT in this package — they belong to whichever host
@@ -142,3 +146,26 @@ without a hard runtime dependency in either direction.
 ## License
 
 MIT — see [LICENSE](./LICENSE).
+
+## Changelog
+
+### v1.2.0 — Multi-tier compression rules + deprecated budget triggers
+
+**Added**:
+- `TIER2_DISTILL_RULES` — distillation rules for T1→T2 compression (keep decisions, outcomes, function/module refs; drop exact line numbers, diffs, process details). Includes source header format.
+- `TIER3_CONDENSE_RULES` — ultra-condensation rules for T2→T3 (1-3 bare facts per block, source header).
+- `CompressionTier` type (1 | 2 | 3).
+- `TierTokenUsage` interface for per-tier token accounting.
+
+**Deprecated** (will be removed in v2.0.0):
+- `computeTierBudgets()` — 60/30/10 budget split replaced by independent per-tier triggers using `nudgeGrowthTokens` as universal threshold.
+- `computeTierTrigger()` — replaced by direct `>=` comparison in host system.
+- `TierBudgetConfig`, `TierTriggerResult` interfaces.
+
+### v1.1.0 — Quality gate metrics
+
+- Added standalone metric utilities: `tokenize`, `rouge1F1`, `rouge1Recall`, `rouge1Precision`, `topKRecall`, `topKByTf`, `termFrequency`, `jaccardSimilarity`, `extractFilePaths`.
+
+### v1.0.0 — Initial extraction
+
+- Extracted from opencode-acp: quality gate (rouge-recall-v1), compression principles, trigger policy.
