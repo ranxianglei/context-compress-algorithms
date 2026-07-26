@@ -18,23 +18,23 @@ KEEP — these are the only things that survive distillation:
 - Key lessons: what failed and why ("tried X, failed because Y"). These prevent repeating mistakes.
 - Critical constraints discovered ("must support Node 22", "AGENTS.md forbids as any").
 - Design decisions with architectural impact ("chose compress-as-anchor over synthetic messages because prefix cache").
-- Whether content is OBSOLETE or SUPERSEDED — explicitly mark: "[SUPERSEDED by PR #NNN]" or "[OBSOLETE: code deleted in vX.Y.Z]".
-- Function/class/type names and module paths that are the SUBJECT of the work — e.g., "fixed filterCompressedRanges in prune.ts", "added SessionStateRegistry in state.ts". Not exact line numbers or full signatures — just enough to LOCATE the code without searching. If the block was about fixing or adding a specific function, KEEP that function's name and file.
+- Whether content is OBSOLETE or SUPERSEDED — mark with one line: "[SUPERSEDED by PR #NNN]" or "[OBSOLETE: deleted in vX.Y.Z]". Do NOT keep the obsolete content's details — just the marker and reason.
+- Function/class/type names and module paths that are the SUBJECT of the work — e.g., "fixed filterCompressedRanges in prune.ts", "added SessionStateRegistry in state.ts". Not exact line numbers or full signatures — just enough to LOCATE the code without searching.
+- Exploration findings: if a block was exploratory with no decision, keep the CONCLUSION in one line ("explored X, not viable because Y"). Do not keep the exploration process.
 
 DROP — these were useful during the work but are no longer needed:
 - Exact line numbers, diffs, verbose function signatures, full code listings.
 - Build/deploy process details, test execution steps.
 - Review process details (who reviewed, what rounds, test counts).
 - Verbose logs, command output, intermediate debugging steps.
-- Repeated context that appears across multiple summaries (keep only in the most recent).
 
 FORMAT:
 - Start each distilled block with a source header line:
   \`Source: bN+bM+... (XK→YK tok, Zx). [original topic]\`
   Example: \`Source: b5+b7 (56K+44K→268 tok, 375x). [Tool-result recap + publish]\`
-- 3-7 bullet points per block, each a self-contained fact.
+- 3-5 bullet points per source block, each a self-contained fact.
 - Dense, scannable — no narrative prose.
 - Start with the outcome, not the process: "v1.13.0 shipped (7 PRs bundled)" not "implemented 7 PRs then reviewed then merged".
-- If ALL content in a block is obsolete/superseded, say so in one line: "[OBSOLETE] Entire block superseded by [reason]. No actionable content."
+- Cross-block synthesis: if multiple source blocks cover the same topic (same PR, same feature, same bug), MERGE them into a single group of bullets. Do not repeat the same fact from different blocks — keep it once under the most relevant source header.
 
-SIZE TARGET: 50-150 tokens per distilled block. If you can't fit it in 150 tokens, you're keeping too much process.`
+SIZE TARGET: 50-150 tokens per source block (excluding the header). If you can't fit it in 150 tokens, you're keeping too much process. If a block has nothing worth keeping (pure noise), output just the header followed by "[no actionable content]".`
