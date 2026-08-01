@@ -10,7 +10,7 @@ export const TIER3_CONDENSE_RULES = `TIER 3 COMPRESSION — ULTRA-CONDENSATION
 
 You are compressing distilled summaries (Tier 2) into ultra-condensed facts (Tier 3). The distilled summaries already contain only decisions and outcomes. Your job is to reduce them to bare factual references.
 
-PRIORITY — when a source block has more facts than the size target allows, keep in this order:
+PRIORITY — keep in this order:
 1. Shipped outcomes (versions released, PRs merged) — these are permanent record.
 2. Open work (PRs/issues still pending) — these may need follow-up.
 3. Key decisions with architectural impact ("chose X over Y because Z").
@@ -18,12 +18,11 @@ PRIORITY — when a source block has more facts than the size target allows, kee
 Drop everything else. Tier 3 is a lookup index, not a knowledge base.
 
 FORMAT:
-- Start with a source header line:
-  \`Source: bN+bM+... (XK→YK tok, Zx). [original topic]\`
-- Output 1-3 facts per source block. Each fact is a single line: subject + outcome.
+- Write a HOLISTIC list of bare facts, grouped by theme — not by source block.
+- NO per-block headers. NO "Source: bN" lines.
+- Each fact is a single line: "[PR/Issue/Version] — [outcome in ≤8 words]"
+- Merge related facts aggressively. If multiple blocks concern the same release/feature/bug, output ONE line covering all of them.
 - No explanations, no rationale, no process — just the fact.
-- Format: "[PR/Issue/Version] — [outcome in ≤8 words]"
-- Merge related facts from different source blocks if they concern the same topic.
 
 EXAMPLES:
 - "v1.13.0 shipped — quality gate + GC fix (7 PRs)"
@@ -36,6 +35,4 @@ DROP:
 - Multi-sentence context. If a fact needs >1 sentence, it's too detailed for Tier 3.
 - Lessons learned ("tried X, failed because Y") — drop UNLESS the failure is likely to recur and the block is <30 days old.
 - Design rationale details — keep the decision, drop the "because" unless it's a critical constraint.
-- Anything marked [OBSOLETE] or [SUPERSEDED] — drop entirely, note "[N blocks obsolete]" in the summary.
-
-SIZE TARGET: 30-60 tokens per source block (including header). For a batch of N source blocks, total output ≈ N × 40 tokens. If a source block has only one trivial fact, output just the header + one line.`
+- Anything marked [OBSOLETE] or [SUPERSEDED] — drop entirely, note "[N blocks obsolete]" at the end.`
